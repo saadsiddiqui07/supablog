@@ -1,6 +1,11 @@
 # Next.js + Tailwind and Supabase App
 
-This example shows how to use [Supabase](https://supabase.com/) with [Next.js](https://nextjs.org/). 
+This example shows how to use [Supabase](https://supabase.com/) with [Next.js](https://nextjs.org/). This application is completely styled with [TailwindCSS](https://tailwindcss.com/).
+KEY FEATURES
+1. Supabase Auth
+2. SignIn with a magic link
+3. Update your profile
+4. Create, update and delete posts.
 ## Deploy your own
 
 Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) or preview live with [StackBlitz](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
