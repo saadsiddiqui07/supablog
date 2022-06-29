@@ -1,7 +1,6 @@
 # Next.js + Tailwind and Supabase App
 
-This example shows how to use [Supabase](https://supabase.com/) with [Next.js](https://nextjs.org/). This application is completely styled with [TailwindCSS](https://tailwindcss.com/).
-KEY FEATURES
+This is a Blog application template which demonstrates how to use [Supabase](https://supabase.com/) with [Next.js](https://nextjs.org/). This application is completely styled with [TailwindCSS](https://tailwindcss.com/). The key features
 1. Supabase Auth
 2. SignIn with a magic link
 3. Update your profile
