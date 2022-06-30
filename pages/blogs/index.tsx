@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { supabase } from "../../supabase/client";
 import Post from "../../components/Post";
 import BlogPropsType from "../../types/BlogPropsType";
@@ -12,9 +12,9 @@ const Blogs = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [posts, setPosts] = useState<BlogPropsType[]>([]);
   const router = useRouter();
-
   const emptyInput = !title || !content;
 
+  // get user data
   const getUserProfile = () => {
     const user = supabase.auth.user();
     setUserInfo(user?.email);
