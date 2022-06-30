@@ -73,7 +73,7 @@ const Blog = () => {
             <div className="flex flex-col sm:p-2 my-2 sm:py-0 text-gray-400">
               <small>Posted by: {userData?.userEmail}</small>
               <small>
-                At: {new Date(userData?.created_at).toLocaleString()}
+                Posted on: {new Date(userData?.created_at).toDateString()}
               </small>
             </div>
           </div>
