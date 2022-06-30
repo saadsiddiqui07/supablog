@@ -1,5 +1,5 @@
-import { supabase } from "../client";
 import { ChangeEvent, useState } from "react";
+import { supabase } from "../supabase/client";
 
 const Auth = () => {
   const [loading, setLoading] = useState<boolean>(false);

@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { supabase } from "../../client";
+import { supabase } from "../../supabase/client";
 import Post from "../../components/Post";
 import BlogPropsType from "../../types/BlogPropsType";
 

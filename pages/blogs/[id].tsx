@@ -1,7 +1,7 @@
 import Head from "next/head";
-import { supabase } from "../../client";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { supabase } from "../../supabase/client";
 
 interface UserBlogDataProps {
   id: number;

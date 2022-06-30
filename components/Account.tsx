@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { supabase } from "../client";
+import { supabase } from "../supabase/client";
 import Image from "next/image";
 
 const Account = ({ session }: any) => {

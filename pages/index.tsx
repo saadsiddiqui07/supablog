@@ -1,9 +1,9 @@
 import Head from "next/head";
 import type { NextPage } from "next";
-import { supabase } from "../client";
 import { useEffect, useState } from "react";
 import Auth from "../components/Auth";
 import Account from "../components/Account";
+import { supabase } from "../supabase/client";
 
 const Home: NextPage = () => {
   const [session, setSession] = useState<any>(null);
