@@ -24,10 +24,10 @@ const Post = ({ post }: PostProps) => {
         {post.title}
       </p>
       <small className="text-xs md:text-md text-gray-400 my-4 flex-start group-hover:text-white">
-        {truncateContent(post.content, 150)}
+        {truncateContent(post.content, 190)}
       </small>
       <button
-        className="mt-auto text-xs rounded m-2 px-2 py-1 w-min bg-blue-600 "
+        className="mt-auto text-xs rounded m-2 px-2 py-1 w-min bg-blue-600"
         onClick={handleReadBlog}
       >
         Read
