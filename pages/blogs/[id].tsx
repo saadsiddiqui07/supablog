@@ -7,45 +7,33 @@ interface UserBlogDataProps {
   id: number;
   title: string;
   content: string;
-  userEmail: string;
+  created_by: string;
   created_at: any;
 }
 
-const Blog = () => {
-  const [userData, setUserData] = useState<UserBlogDataProps>();
+interface BlogProps {
+  blog: UserBlogDataProps[];
+}
+
+const Blog = ({ blog }: BlogProps) => {
+  const blogData = Object.assign({}, ...blog);
   const [authUserEmail, setAuthUserEmail] = useState<string | undefined>("");
-  const { asPath, back, replace, push } = useRouter();
-  const blogId = asPath.split("/").pop();
-  const isAuthenticated = userData?.userEmail === authUserEmail;
+  const { back, replace, push } = useRouter();
+
+  const isAuthenticated = blogData?.created_by === authUserEmail;
 
   useEffect(() => {
-    getBlogInfo();
+    getUserInfo();
   }, []);
 
   // edit on new route
   const handleEditBlog = () => {
-    push(`/update/${blogId}`);
+    push(`/update/${blogData?.id}`);
   };
 
   // get data for a specific blog
-  const getBlogInfo = async () => {
+  const getUserInfo = async () => {
     try {
-      let { error, data } = await supabase
-        .from("posts")
-        .select("title, content, created_by, created_at, id")
-        .eq("id", blogId);
-      if (error) throw error;
-      if (data) {
-        let blogData = Object.assign({}, ...data);
-        setUserData({
-          title: blogData.title,
-          content: blogData.content,
-          userEmail: blogData.created_by,
-          created_at: blogData.created_at,
-          id: blogData.id,
-        });
-      }
-
       const user = supabase.auth.user();
       setAuthUserEmail(user?.email);
     } catch (error: any) {
@@ -55,29 +43,29 @@ const Blog = () => {
 
   // delete a post
   const deletePost = async () => {
-    await supabase.from("posts").delete().match({ id: blogId });
+    await supabase.from("posts").delete().match({ id: blogData?.id });
     replace("/blogs");
   };
 
   return (
     <div className="bg-black text-white min-h-screen flex flex-col ">
       <Head>
-        <title>Blogs: Blog-{blogId}</title>
+        <title>Blogs: Blog-{blogData?.id}</title>
       </Head>
       <main className="max-w-5xl w-full mx-auto min-h-screen ">
         <div className="w-[80%] m-10 mx-auto flex flex-col">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between">
             <h1 className="text-[25px] md:text-[35px] text-semibold">
-              {userData?.title}
+              {blogData?.title}
             </h1>
             <div className="flex flex-col sm:p-2 my-2 sm:py-0 text-gray-400">
-              <small>Posted by: {userData?.userEmail}</small>
+              <small>Posted by: {blogData?.created_by}</small>
               <small>
-                Posted on: {new Date(userData?.created_at).toDateString()}
+                Posted on: {new Date(blogData?.created_at).toDateString()}
               </small>
             </div>
           </div>
-          <p className="text-gray-300 mt-4">{userData?.content}</p>
+          <p className="text-gray-300 mt-4">{blogData?.content}</p>
 
           <div className="flex w-full flex-col-reverse sm:flex-row sm:items-center justify-between">
             <button
@@ -110,6 +98,19 @@ border-[1.5px] border-solid border-white
       </main>
     </div>
   );
+};
+
+export const getServerSideProps = async (context: any) => {
+  let { data } = await supabase
+    .from("posts")
+    .select("title, content, created_by, created_at, id")
+    .eq("id", context.query.id);
+
+  return {
+    props: {
+      blog: data,
+    },
+  };
 };
 
 export default Blog;
