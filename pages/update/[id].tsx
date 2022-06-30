@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { supabase } from "../../client";
@@ -55,6 +56,9 @@ const Update = () => {
 
   return (
     <div className="flex flex-col min-h-screen items-center bg-black text-white">
+      <Head>
+        <title>Edit - Blog {blogId}</title>
+      </Head>
       <div className="flex p-4 w-[100%] md:w-[70%] mx-auto flex-col">
         <h1 className="text-xl">Edit a blog!</h1>
         <input
@@ -68,7 +72,7 @@ const Update = () => {
           onChange={(e) => setContent(e.target.value)}
           className="bg-gray-900 p-2 rounded-lg text-sm md:text-md lg:text-lg text-white my-2 outline-0 border-none text-gray-200 placeholder:font-normal"
           placeholder="Enter content"
-          rows={3}
+          rows={6}
         />
         <button
           onClick={updateBlog}

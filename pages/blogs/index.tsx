@@ -65,7 +65,7 @@ const Blogs = () => {
   return (
     <div className="flex flex-col min-h-screen items-center bg-black text-white">
       <Head>
-        <title>Blogs</title>
+        <title>Supablog - Blogs</title>
       </Head>
       <button
         onClick={() => router.push("/")}
