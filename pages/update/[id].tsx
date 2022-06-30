@@ -10,10 +10,6 @@ const Update = () => {
   const { asPath, replace, back } = useRouter();
   const blogId = asPath.split("/").pop();
 
-  useEffect(() => {
-    getBlogInfo();
-  }, []);
-
   // fetch the info of the specific blog
   const getBlogInfo = async () => {
     try {
@@ -31,6 +27,10 @@ const Update = () => {
       alert(error.message);
     }
   };
+
+  useEffect(() => {
+    getBlogInfo();
+  }, []);
 
   // update a blog
   const updateBlog = async () => {
