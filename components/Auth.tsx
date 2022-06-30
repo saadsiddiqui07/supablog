@@ -26,7 +26,7 @@ const Auth = () => {
 
   return (
     <div className="flex flex-col bg-black min-h-screen w-[100%] justify-center items-center">
-      <main className="p-2 flex flex-col w-[60%] items-center justify-center">
+      <main className="p-2 flex flex-col w-[90%] sm:w-[60%] items-center justify-center">
         <h1 className="font-bold my-4 ">Supabase + Next.js</h1>
         <input
           placeholder="Enter your email"
@@ -39,7 +39,7 @@ const Auth = () => {
             e.preventDefault();
             handleLogin(email);
           }}
-          className="text-[#3DCF8E] border-solid boder-gray-200 p-2 rounded-lg"
+          className="text-[#3DCF8E] border-solid my-2 w-full boder-gray-200 p-2 rounded-lg"
           disabled={loading}
         >
           {loading ? "Loading.." : "Submit Email"}
