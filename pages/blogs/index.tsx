@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { supabase } from "../../client";
@@ -63,6 +64,9 @@ const Blogs = () => {
 
   return (
     <div className="flex flex-col min-h-screen items-center bg-black text-white">
+      <Head>
+        <title>Blogs</title>
+      </Head>
       <button
         onClick={() => router.push("/")}
         className="ml-auto text-xs md:text-sm rounded-lg hover:bg-white hover:text-black py-1 px-2 md:py-2 md:px-3 border-2 border-solid border-white mr-[50px] mt-4"

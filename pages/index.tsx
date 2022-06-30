@@ -1,3 +1,4 @@
+import Head from "next/head";
 import type { NextPage } from "next";
 import { supabase } from "../client";
 import { useEffect, useState } from "react";
@@ -17,6 +18,9 @@ const Home: NextPage = () => {
 
   return (
     <div className="bg-black text-white">
+      <Head>
+        <title>Supablog App</title>
+      </Head>
       <main className="max-w-4xl grid mx-auto flex flex-col">
         {!session ? (
           <Auth />

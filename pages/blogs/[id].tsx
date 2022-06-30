@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { supabase } from "../../client";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -60,6 +61,9 @@ const Blog = () => {
 
   return (
     <div className="bg-black text-white min-h-screen flex flex-col ">
+      <Head>
+        <title>Blogs: Blog-{blogId}</title>
+      </Head>
       <main className="max-w-5xl w-full mx-auto min-h-screen ">
         <div className="w-[80%] m-10 mx-auto flex flex-col">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between">
@@ -89,14 +93,14 @@ border-[1.5px] border-solid border-white
               <button
                 disabled={!isAuthenticated}
                 onClick={handleEditBlog}
-                className="text-xs sm:text-sm disabled:border-2 border-solid disabled:bg-gray-600 disabled:border-blue-500 rounded-lg py-2 px-3 hover:bg-blue-700 bg-blue-600 mt-4"
+                className="text-xs sm:text-sm  disabled:bg-gray-600  rounded-lg py-2 px-3 hover:bg-blue-700 bg-blue-600 mt-4"
               >
                 Edit
               </button>
               <button
                 disabled={!isAuthenticated}
                 onClick={deletePost}
-                className="text-xs sm:text-sm disabled:border-2 border-solid disabled:bg-gray-600 disabled:border-red-500 rounded-lg py-2 px-3 hover:bg-red-700 bg-red-600 mt-4"
+                className="text-xs sm:text-sm disabled:bg-gray-600  rounded-lg py-2 px-3 hover:bg-red-700 bg-red-600 mt-4"
               >
                 Delete
               </button>
