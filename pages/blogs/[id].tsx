@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { supabase } from "../../supabase/client";
@@ -9,6 +10,7 @@ interface UserBlogDataProps {
   content: string;
   created_by: string;
   created_at: any;
+  postImage?: string;
 }
 
 interface BlogProps {
@@ -44,6 +46,7 @@ const Blog = ({ blog }: BlogProps) => {
   // delete a post
   const deletePost = async () => {
     await supabase.from("posts").delete().match({ id: blogData?.id });
+    await supabase.storage.from("postimages").remove([blogData?.postImage]);
     replace("/blogs");
   };
 
@@ -65,6 +68,16 @@ const Blog = ({ blog }: BlogProps) => {
               </small>
             </div>
           </div>
+          {blogData?.postImage && (
+            <Image
+              priority
+              src={blogData?.postImage}
+              layout="responsive"
+              height="30%"
+              objectFit="cover"
+              width="90%"
+            />
+          )}
           <p className="text-gray-300 mt-4">{blogData?.content}</p>
 
           <div className="flex w-full flex-col-reverse sm:flex-row sm:items-center justify-between">
@@ -103,7 +116,7 @@ border-[1.5px] border-solid border-white
 export const getServerSideProps = async (context: any) => {
   let { data } = await supabase
     .from("posts")
-    .select("title, content, created_by, created_at, id")
+    .select("title, content, created_by, created_at, id, postImage")
     .eq("id", context.query.id);
 
   return {
