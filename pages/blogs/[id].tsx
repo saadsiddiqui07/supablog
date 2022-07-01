@@ -58,7 +58,7 @@ const Blog = ({ blog }: BlogProps) => {
       <main className="max-w-5xl w-full mx-auto min-h-screen ">
         <div className="w-[80%] m-10 mx-auto flex flex-col">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between">
-            <h1 className="text-[25px] md:text-[35px] text-semibold">
+            <h1 className="text-[25px] md:text-[35px] font-semibold">
               {blogData?.title}
             </h1>
             <div className="flex flex-col sm:p-2 my-2 sm:py-0 text-gray-400">
