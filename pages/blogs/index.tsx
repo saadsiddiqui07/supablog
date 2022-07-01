@@ -5,14 +5,27 @@ import { supabase } from "../../supabase/client";
 import Post from "../../components/Post";
 import BlogPropsType from "../../types/BlogPropsType";
 
+// ADD FUNCTION TO UPLOAD IMAGE IN THE SUPABASE STORAGE
+
 const Blogs = () => {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [userInfo, setUserInfo] = useState<string | undefined>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [posts, setPosts] = useState<BlogPropsType[]>([]);
+  const [selectedFile, setSelectedFile] = useState<any>(null);
+  let [image, setImage] = useState<string>("");
+  const imagePickerRef = useRef<any>(null);
   const router = useRouter();
   const emptyInput = !title || !content;
+
+  // select image to post
+  const handleImageChange = (e: any) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      setSelectedFile(file);
+    }
+  };
 
   // get user data
   const getUserProfile = () => {
@@ -42,13 +55,28 @@ const Blogs = () => {
   const createNewPost = async () => {
     try {
       setLoading(true);
+      // upload an image
+      if (selectedFile) {
+        let { data, error } = await supabase.storage
+          .from("postimages")
+          .upload(`${Date.now()}_${selectedFile?.name}`, selectedFile);
+        if (data) {
+          setImage(data.Key);
+          image = data.Key;
+        }
+        if (error) throw error;
+      }
+      // insert data in the database
       await supabase
         .from("posts")
-        .insert([
+        .upsert([
           {
             title,
             content,
             created_by: userInfo,
+            postImage: image
+              ? `https://qhziunnvlmdifpxaxxzz.supabase.co/storage/v1/object/public/${image}`
+              : "",
           },
         ])
         .single();
@@ -56,6 +84,8 @@ const Blogs = () => {
       alert(error.message);
     } finally {
       setLoading(false);
+      setSelectedFile(null);
+      setImage("");
       setTitle("");
       setContent("");
       fetchAllPosts();
@@ -75,12 +105,36 @@ const Blogs = () => {
       </button>
       <div className="flex p-4 w-[90%] sm:w-[70%]  mx-auto flex-col">
         <h1 className="text-md sm:text-xl">Write a blog!</h1>
-        <input
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="bg-gray-900 text-sm md:text-md lg:text-lg p-2 rounded-lg text-white my-2 outline-0 border-none font-semibold placeholder:font-normal"
-          placeholder="Enter title"
-        />
+        <div className="flex items-center w-[100%]">
+          <input
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="bg-gray-900 text-sm md:text-md flex-1 lg:text-lg p-2 rounded-lg text-white my-2 outline-0 border-none font-semibold placeholder:font-normal"
+            placeholder="Enter title"
+          />
+          <input
+            hidden
+            type="file"
+            onChange={handleImageChange}
+            ref={imagePickerRef}
+          />
+          <div className="flex items-center">
+            <button
+              onClick={() => imagePickerRef.current.click()}
+              className="p-2 ml-3 rounded-md w-full bg-teal-600 hover:bg-blue-600 text-[10px] sm:text-xs md:text-sm"
+            >
+              {selectedFile ? selectedFile?.name : "Select an Image!"}
+            </button>
+            {selectedFile && (
+              <p
+                onClick={() => setSelectedFile(!selectedFile)}
+                className="font-bold text-red-600 mx-2 cursor-pointer"
+              >
+                X
+              </p>
+            )}
+          </div>
+        </div>
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
