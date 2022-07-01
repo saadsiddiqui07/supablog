@@ -3,4 +3,5 @@ export default interface BlogPropsType {
   title: string;
   content: string;
   created_by: string;
+  postImage?: string;
 }
