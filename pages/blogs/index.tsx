@@ -105,7 +105,7 @@ const Blogs = () => {
       </button>
       <div className="flex p-4 w-[90%] sm:w-[70%]  mx-auto flex-col">
         <h1 className="text-md sm:text-xl">Write a blog!</h1>
-        <div className="flex items-center w-[100%]">
+        <div className="flex flex-col-reverse md:flex-row md:items-center">
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -121,7 +121,7 @@ const Blogs = () => {
           <div className="flex items-center">
             <button
               onClick={() => imagePickerRef.current.click()}
-              className="p-2 ml-3 rounded-md w-full bg-teal-600 hover:bg-blue-600 text-[10px] sm:text-xs md:text-sm"
+              className="p-2 md:ml-3 rounded-md w-full bg-teal-600 hover:bg-blue-600 text-[10px] sm:text-xs md:text-sm"
             >
               {selectedFile ? selectedFile?.name : "Select an Image!"}
             </button>
